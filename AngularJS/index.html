@@ -9,6 +9,10 @@
 </head>
 <body ng-controller="ParkingCtrl"> <!-- Connection to Controller -->
     <h1>{{parking.framework}}</h1>
-
+    <table>
+        <tr ng-repeat=" item in parking.data.features">
+            <td>{{item.properties}}</td>
+        </tr>
+    </table>
 </body>
 </html>
