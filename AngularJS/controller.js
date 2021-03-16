@@ -9,8 +9,13 @@ ParkingApp.controller("ParkingCtrl", function ($scope,$http) {
         var ctx = c.getContext("2d");
         angular.forEach($scope.parking,function(value,key){ // Loop through parking.data
             angular.forEach(value.features,function(value2,key){ // Loop through parking.data.features
-                //console.log("hej"+value2.properties.OBJECTID);
-                ctx.fillRect(value2.properties.LONGITUDE,value2.properties.LATITUDE,10,10); // Use the coordinates of each parking loot to write them in the canvas
+                if( value2.properties.OBJECTID == 1000){
+                  console.log(value2.properties.LONGITUDE);
+                  ctx.fillRect((value2.properties.LONGITUDE),(value2.properties.LATITUDE),10,10); // Use the coordinates of each parking loot to write them in the canvas
+                }
+                
+                
+
             });
         });
     });
