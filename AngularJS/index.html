@@ -8,10 +8,9 @@
     <script src="model.js"></script>
 </head>
 <body ng-controller="ParkingCtrl"> <!-- Connection to Controller -->
-    <h1>{{parking.framework}}</h1>
     <table>
-        <tr ng-repeat=" item in parking.data.features">
-            <td>{{item.properties}}</td>
+        <tr ng-repeat=" item in parking.data.features"> <!-- Loop through the JSON-file -->
+            <td>{{item.properties}}</td> <!-- Write all properties for each data.features -->
         </tr>
     </table>
 </body>
