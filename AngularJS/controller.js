@@ -1,25 +1,21 @@
 var ParkingApp = angular.module("ParkingApp", []);
 
 ParkingApp.controller("ParkingCtrl", function ($scope,$http) {
-
+    var map = L.map('map').setView([42.352,-71.072], 13); // variable for the map
     $scope.loadMap = function() {
-        console.log("hej");
-        var map = L.map('map').setView([55,10], 3);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { // adding the map layer
         maxZoom: 20,
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>' // copyright to openstreetmap
       }).addTo(map);
     }
     $scope.loadParking = function(){
-        $scope.parking = model;
         $http.get("Parking_Meters.geojson").then(function (parking) { // Access to the parking meters geojson-file
             $scope.parking = parking; // adding the content of the JSON-file to $scope.parking
             console.log($scope.parking) // console log 
             angular.forEach($scope.parking,function(value,key){ // Loop through parking.data
                 angular.forEach(value.features,function(value2,key){ // Loop through parking.data.features
-                    if( value2.properties.OBJECTID == 1000){
-                    console.log(value2.properties.LONGITUDE);
+                    if( value2.properties.OBJECTID <= 500){ // loading the first 500
+                        var marker = L.marker([value2.properties.LATITUDE, value2.properties.LONGITUDE]).addTo(map); // making a marker with the cooridnates from the geojson file
                     }
 
                 });
