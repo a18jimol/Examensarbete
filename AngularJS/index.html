@@ -11,9 +11,25 @@
     <script src="../../AngularSource/angular.min.js"></script>
     <script src="controller.js"></script>
     <script src="model.js"></script>
+    <style>
+        #map{
+            height: 500px;
+            width: 500px;
+        }
+    </style>
 </head>
 <body ng-controller="ParkingCtrl"> <!-- Connection to Controller -->
+    <div id="map"></div>
 
+    <script>
+        var map = L.map('map').setView([55,10], 3);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+      }).addTo(map);
+
+    </script>
     <table>
         <tr>
             <th>ID</th>
