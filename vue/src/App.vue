@@ -31,10 +31,9 @@ export default {
       (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)}); // write the markers
   },
   loadParking() {
-      var random1 = Math.floor((Math.random()*500)+1000); // random number
       this.markerLayer.clearLayers(); //remove all old markers
       //console.log(json.features);
-      this.filterParking = json.features.filter(item => item.properties.OBJECTID < random1); //filter all parking
+      this.filterParking = json.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
       console.log(this.filterParking);
       (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)}); // write the markers
   }
