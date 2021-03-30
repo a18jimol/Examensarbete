@@ -9,13 +9,23 @@ angular.module("parkingApp", []).controller("ParkingCtrl", function ($scope,$htt
       }).addTo(map);
     }
     $scope.loadParking = function(){
-        $http.get("Parking_Meters.geojson").then(function (parking) { // Access to the parking meters geojson-file
+        $http.get("../Parking_Meters.json").then(function (parking) { // Access to the parking meters geojson-file
             $scope.parking = parking; // adding the content of the JSON-file to $scope.parking
             console.log($scope.parking); // console log 
             
-            $scope.filteredParking = $filter('limitTo')($scope.parking.data.features, 10, 1); // filter the array data.features with a limit to the first 10
+            $scope.filteredParking = $filter('filter')($scope.parking.data.features, "free"); // filter out the free parkings
             console.log($scope.filteredParking); 
             angular.forEach($scope.filteredParking,function(value,key){ // Loop through parking.data      
+                var marker = L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(map); // making a marker with the cooridnates from the geojson file             
+            });
+        });
+    }
+    $scope.loadAllParking = function(){
+        $http.get("../Parking_Meters.json").then(function (parking) { // Access to the parking meters geojson-file
+            $scope.parking = parking; // adding the content of the JSON-file to $scope.parking
+            console.log($scope.parking); // console log 
+        
+            angular.forEach($scope.parking.data.features,function(value,key){ // Loop through parking.data      
                 var marker = L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(map); // making a marker with the cooridnates from the geojson file             
             });
         });
