@@ -1,7 +1,7 @@
 <template>
 <div>
-  <button  v-on:click="loadMap">Load Map</button>
-  <button  v-on:click="loadParking">Load Parking</button>
+  <button  v-on:click="loadAllParking">Load All Parking places</button>
+  <button  v-on:click="loadParking">Load Free Parking places </button>
   <div id="map"></div>
   
 </div>
@@ -23,11 +23,12 @@ export default {
   },
   methods: {
    
-  loadMap() {
-    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.map);
+  loadAllParking() {
+      this.markerLayer.clearLayers(); //remove all old markers
+      //console.log(json.features);
+      this.filterParking = json.features; // all parking spaces
+      console.log(this.filterParking);
+      (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)}); // write the markers
   },
   loadParking() {
       var random1 = Math.floor((Math.random()*500)+1000); // random number
@@ -36,7 +37,8 @@ export default {
       this.filterParking = json.features.filter(item => item.properties.OBJECTID < random1); //filter all parking
       console.log(this.filterParking);
       (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)}); // write the markers
-  }},
+  }
+  },
   mounted() {
     this.map = L.map("map").setView([42.352,-71.072], 13); // set view for the map
     this.markerLayer = L.layerGroup().addTo(this.map); // layergroup 
