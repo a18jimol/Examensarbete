@@ -2,11 +2,11 @@
 <html ng-app="ParkingApp"> <!-- Connection to Model -->
 <head>
     <title>Parking App AngularJS</title>
-    <link rel="stylesheet" href="../../leaflet/leaflet.css" />
-    <script src="../../leaflet/leaflet.js"></script>
-    <script src="../../AngularSource/angular.min.js"></script>
-    <script src="controller.js"></script>
+    <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" />
+    <script src="/node_modules/leaflet/dist/leaflet.js"></script>
+    <script src="/node_modules/angular/angular.js"></script>
     <script src="model.js"></script>
+    <script src="controller.js"></script>
     <style>
         #map{
             height: 1000px;
@@ -15,15 +15,8 @@
     </style>
 </head>
 <body ng-controller="ParkingCtrl"> <!-- Connection to Controller -->
-    <button ng-click="loadMap()">Load Map</button>
     <button ng-click="loadParking()">Load Parking</button>
     <div id="map"></div>
-
-    <script>
-        
-       
-
-    </script>
     
 </body>
 </html>
