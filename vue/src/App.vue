@@ -1,7 +1,18 @@
 <template>
 <div>
-  <button  v-on:click="loadAllParking">Load All Parking places</button>
-  <button  v-on:click="loadParking">Load Free Parking places </button>
+  <h1>Vue.js Parking App</h1>
+    <hr>
+    <div id="meny">
+        <div class ="buttons">
+            <h2>Load all parking places</h2>
+            <button ng-click="loadAllParking()" id="allParking">Load All</button>
+        </div>
+        <div class ="buttons">
+            <h2>Load free parking places</h2>
+            <button ng-click="loadParking()" id="freeParking">Load Free</button>
+        </div>
+    </div>
+    <br>
   <div id="map"></div>
   
 </div>

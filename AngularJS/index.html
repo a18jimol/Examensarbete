@@ -15,8 +15,19 @@
     </style>
 </head>
 <body ng-controller="ParkingCtrl"> <!-- Connection to Controller -->
-    <button ng-click="loadAllParking()">Load All Parking places</button>
-    <button ng-click="loadParking()">Load Free Parking places</button>
+    <h1>AngularJS Parking App</h1>
+    <hr>
+    <div id="meny">
+        <div class ="buttons">
+            <h2>Load all parking places</h2>
+            <button ng-click="loadAllParking()" id="allParking">Load All</button>
+        </div>
+        <div class ="buttons">
+            <h2>Load free parking places</h2>
+            <button ng-click="loadParking()" id="freeParking">Load Free</button>
+        </div>
+    </div>
+    <br>
     <div id="map"></div>
     
 </body>
