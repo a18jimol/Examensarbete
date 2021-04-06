@@ -5,11 +5,11 @@
     <div id="meny">
         <div class ="buttons">
             <h2>Load all parking places</h2>
-            <button ng-click="loadAllParking()" id="allParking">Load All</button>
+            <button v-on:click="loadAllParking()" id="allParking">Load All</button>
         </div>
         <div class ="buttons">
             <h2>Load free parking places</h2>
-            <button ng-click="loadParking()" id="freeParking">Load Free</button>
+            <button v-on:click-="loadParking()" id="freeParking">Load Free</button>
         </div>
     </div>
     <br>
