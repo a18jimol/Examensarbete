@@ -59,7 +59,6 @@ export default {
           this.filterParking = this.parking.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
           //console.log(this.filterParking);
           (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
-          
         });
         
   }
@@ -72,8 +71,17 @@ export default {
 </script>
 
 <style>
+body{
+    text-align: center;
+}
 #map{
     height: 1000px;
     width: 1000px;
+    margin:auto;
+    border: solid black 1px;
+}
+.buttons{
+    display: inline-block;
+    width:300px;
 }
 </style>
