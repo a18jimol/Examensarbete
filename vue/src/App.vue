@@ -9,7 +9,7 @@
         </div>
         <div class ="buttons">
             <h2>Load free parking places</h2>
-            <button v-on:click-="loadParking()" id="freeParking">Load Free</button>
+            <button v-on:click="loadParking()" id="freeParking">Load Free</button>
         </div>
     </div>
     <br>
@@ -21,13 +21,13 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import json from '../../Parking_Meters.json'; // import the json data
+import axios from 'axios'
 
 export default {
   data() {
     return {
       map: null,
-      parking:json.data, // save the data
+      parking:null, // save the data
       markerLayer : null,
       filterParking: null
     };
@@ -35,18 +35,33 @@ export default {
   methods: {
    
   loadAllParking() {
-      this.markerLayer.clearLayers(); //remove all old markers
-      //console.log(json.features);
-      this.filterParking = json.features; // all parking spaces
-      console.log(this.filterParking);
-      (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)}); // write the markers
+      axios
+        .get('Parking_Meters.json')
+        .then(parking => {
+          
+          this.markerLayer.clearLayers(); //remove all old markers
+          this.parking = parking.data;
+          
+          this.filterParking = this.parking.features.filter(item => item.properties.OBJECTID < 3000); //filter all parking
+          //console.log(this.filterParking);
+          (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+        });
+        
   },
   loadParking() {
-      this.markerLayer.clearLayers(); //remove all old markers
-      //console.log(json.features);
-      this.filterParking = json.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
-      console.log(this.filterParking);
-      (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)}); // write the markers
+      axios
+        .get('Parking_Meters.json')
+        .then(parking => {
+          
+          this.markerLayer.clearLayers(); //remove all old markers
+          this.parking = parking.data;
+          
+          this.filterParking = this.parking.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
+          //console.log(this.filterParking);
+          (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+          var stop = performance.now();
+        });
+        
   }
   },
   mounted() {
