@@ -35,29 +35,22 @@ export default {
   methods: {
    
   loadAllParking() {
+    this.markerLayer.clearLayers(); //remove all old markers
       axios
         .get('Parking_Meters.json')
         .then(parking => {
-          
-          this.markerLayer.clearLayers(); //remove all old markers
-          this.parking = parking.data;
-          
-          this.filterParking = this.parking.features.filter(item => item.properties.OBJECTID < 3000); //filter all parking
-          //console.log(this.filterParking);
-          (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+          this.parking = parking; 
+          (this.parking.data.features).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
         });
         
   },
   loadParking() {
+    this.markerLayer.clearLayers(); //remove all old markers
       axios
         .get('Parking_Meters.json')
         .then(parking => {
-          
-          this.markerLayer.clearLayers(); //remove all old markers
-          this.parking = parking.data;
-          
-          this.filterParking = this.parking.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
-          //console.log(this.filterParking);
+          this.parking = parking;
+          this.filterParking = this.parking.data.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
           (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
         });
         
