@@ -1,1 +1,1 @@
-angular.module("parkingApp", []);
+var model = angular.module("parkingApp", []);

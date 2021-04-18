@@ -1,6 +1,4 @@
-var ParkingApp = angular.module("ParkingApp", []);
-
-angular.module("parkingApp", []).controller("ParkingCtrl", function ($scope,$http,$filter) {
+model.controller("ParkingCtrl", function ($scope,$http,$filter) {
     var iterations = 100;
     var cnt = 1;
     var map = L.map('map').setView([42.352,-71.072], 13); // variable for the map
