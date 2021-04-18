@@ -29,29 +29,51 @@ export default {
       map: null,
       parking:null, // save the data
       markerLayer : null,
-      filterParking: null
+      filterParking: null,
+      iterations : 100,
+      cnt : 1
     };
   },
   methods: {
    
   loadAllParking() {
     this.markerLayer.clearLayers(); //remove all old markers
+    var start = performance.now(); // start measurement
       axios
         .get('Parking_Meters.json')
         .then(parking => {
           this.parking = parking; 
           (this.parking.data.features).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+          var stop = performance.now(); // stop measurement
+          var result=stop-start;
+          var str=localStorage.getItem("data");
+          str+=', ' +result;
+          localStorage.setItem("data",str);
+            if(this.cnt < this.iterations){
+                document.getElementById("allParking").click();
+                this.cnt++;
+            }
         });
         
   },
   loadParking() {
     this.markerLayer.clearLayers(); //remove all old markers
+    var start = performance.now(); // start measurement
       axios
         .get('Parking_Meters.json')
         .then(parking => {
           this.parking = parking;
           this.filterParking = this.parking.data.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
           (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+          var stop = performance.now(); // stop measurement
+          var result=stop-start;
+          var str=localStorage.getItem("data");
+          str+=', ' +result;
+          localStorage.setItem("data",str);
+            if(this.cnt < this.iterations){
+                document.getElementById("freeParking").click();
+                this.cnt++;
+            }
         });
         
   }
