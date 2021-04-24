@@ -3,7 +3,7 @@
 
 ## Setup
 ### Install Node.js
-Download Node.js from https://nodejs.org/en/ 
+Download Node.js from https://nodejs.org/en/ <br />
 Download repository to the node.js folder
 
 ## Vue.js Setup
