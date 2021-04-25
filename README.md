@@ -5,6 +5,8 @@
 ### Install Node.js
 Download Node.js from https://nodejs.org/en/ <br />
 Download repository to the node.js folder
+<br /><br />
+If the node_modules folder is not created automatically when installing AngularJS and Leaflet it has to be added manually
 
 ## Vue.js Setup
 ### Install Vue Cli Package
