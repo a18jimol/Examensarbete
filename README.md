@@ -4,7 +4,7 @@
 ## Setup
 ### Install Node.js
 Download Node.js from https://nodejs.org/en/ <br />
-Download repository to the node.js folder
+Download repository to the node.js folder <br />
 If you save the repository move the server.js file to the node.js folder and change directory in the server.js file so it goes to the right location
 <br /><br />
 If the node_modules folder is not created automatically when installing AngularJS and Leaflet it has to be added manually
