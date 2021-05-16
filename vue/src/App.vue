@@ -11,6 +11,10 @@
             <h2>Load free parking places</h2>
             <button v-on:click="loadParking()" id="freeParking">Load Free</button>
         </div>
+        <div class ="buttons">
+            <h2>Load 5 parking places</h2>
+            <button v-on:click="load5Parking()" id="5Parking">Load Free</button>
+        </div>
     </div>
     <br>
   <div id="map"></div>
@@ -30,8 +34,9 @@ export default {
       parking:null, // save the data
       markerLayer : null,
       filterParking: null,
-      iterations : 100,
-      cnt : 1
+      iterations : 1000,
+      cnt : 1,
+      data : ""
     };
   },
   methods: {
@@ -42,16 +47,21 @@ export default {
       axios
         .get('Parking_Meters.json')
         .then(parking => {
-          this.parking = parking; 
+          this.parking = parking;
           (this.parking.data.features).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
           var stop = performance.now(); // stop measurement
           var result=stop-start;
-          var str=localStorage.getItem("data");
-          str+=', ' +result;
-          localStorage.setItem("data",str);
+          this.data += result + ", ";
+          
             if(this.cnt < this.iterations){
-                document.getElementById("allParking").click();
-                this.cnt++;
+              this.cnt++;
+                setTimeout(function(){
+                  document.getElementById("allParking").click();
+                }, 15000);
+                
+            }
+            else{
+               localStorage.setItem("data",this.data);
             }
         });
         
@@ -67,12 +77,41 @@ export default {
           (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
           var stop = performance.now(); // stop measurement
           var result=stop-start;
-          var str=localStorage.getItem("data");
-          str+=', ' +result;
-          localStorage.setItem("data",str);
+          this.data += result + ", ";
             if(this.cnt < this.iterations){
-                document.getElementById("freeParking").click();
-                this.cnt++;
+              this.cnt++;
+                setTimeout(function(){
+                  document.getElementById("freeParking").click();
+                }, 1000);
+                
+            }
+            else{
+               localStorage.setItem("data",this.data);
+            }
+        });
+        
+  },
+  load5Parking() {
+    this.markerLayer.clearLayers(); //remove all old markers
+    var start = performance.now(); // start measurement
+      axios
+        .get('Parking_Meters.json')
+        .then(parking => {
+          this.parking = parking;
+          this.filterParking = this.parking.data.features.filter(item => item.properties.METER_CONDITION == "open"); //filter all parking
+          (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+          var stop = performance.now(); // stop measurement
+          var result=stop-start;
+          this.data += result + ", ";
+            if(this.cnt < this.iterations){
+              this.cnt++;
+                setTimeout(function(){
+                  document.getElementById("5Parking").click();
+                }, 1000);
+                
+            }
+            else{
+               localStorage.setItem("data",this.data);
             }
         });
         
