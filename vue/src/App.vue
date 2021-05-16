@@ -31,9 +31,7 @@ export default {
   data() {
     return {
       map: null,
-      parking:null, // save the data
       markerLayer : null,
-      filterParking: null,
       iterations : 1000,
       cnt : 1,
       data : ""
@@ -46,9 +44,9 @@ export default {
     var start = performance.now(); // start measurement
       axios
         .get('Parking_Meters.json')
-        .then(parking => {
-          this.parking = parking;
-          (this.parking.data.features).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+        .then(parkingJSON => {
+          var parking = parkingJSON;
+          (parking.data.features).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
           var stop = performance.now(); // stop measurement
           var result=stop-start;
           this.data += result + ", ";
@@ -71,10 +69,10 @@ export default {
     var start = performance.now(); // start measurement
       axios
         .get('Parking_Meters.json')
-        .then(parking => {
-          this.parking = parking;
-          this.filterParking = this.parking.data.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
-          (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+        .then(parkingJSON => {
+          var parking = parkingJSON;
+          var filterParking = parking.data.features.filter(item => item.properties.METER_CONDITION == "free"); //filter all parking
+          (filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
           var stop = performance.now(); // stop measurement
           var result=stop-start;
           this.data += result + ", ";
@@ -96,10 +94,10 @@ export default {
     var start = performance.now(); // start measurement
       axios
         .get('Parking_Meters.json')
-        .then(parking => {
-          this.parking = parking;
-          this.filterParking = this.parking.data.features.filter(item => item.properties.METER_CONDITION == "open"); //filter all parking
-          (this.filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
+        .then(parkingJSON => {
+          var parking = parkingJSON;
+          var filterParking = parking.data.features.filter(item => item.properties.METER_CONDITION == "open"); //filter all parking
+          (filterParking).forEach((value) => {L.marker([value.properties.LATITUDE, value.properties.LONGITUDE]).addTo(this.markerLayer)});
           var stop = performance.now(); // stop measurement
           var result=stop-start;
           this.data += result + ", ";
